@@ -6,14 +6,13 @@ const ipc = require('electron').ipcMain
 // const { BrowserWindow } = require('electron').remote
 let win
 var ratio
-var newSize = [900, 600]
+var newSize = [932, 490]
 
 function createWindow() {
     win = new BrowserWindow({ width: newSize[0], height: newSize[1], frame: false })
     win.setMenuBarVisibility(false)
     // 加载远程URL
-    win.loadURL('http://ximul.tk/tmp/electron-view.html')
-    // win.loadFile('video.html')
+    win.loadFile('video.html')
     win.on('closed', () => {
         win = null
     })
@@ -34,7 +33,7 @@ function createWindow() {
 app.on('ready', createWindow)
 
 ipc.on('initSize', (sys, width, height) => {
-    // win.setSize(width, height)
+
     width = parseInt(width)
     height = parseInt(height)
     ratio = height * 1.0 / width
@@ -42,7 +41,6 @@ ipc.on('initSize', (sys, width, height) => {
     var new_height = Math.trunc(crt_width * ratio);
     newSize = [crt_width, new_height]
     win.setSize(newSize[0], newSize[1])
-    console.log(ratio)
     // win.show()
 })
 
